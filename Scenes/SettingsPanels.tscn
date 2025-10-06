@@ -111,4 +111,5 @@ theme_override_styles/normal = ExtResource("4_puq62")
 text = "Close
 "
 
+[connection signal="pressed" from="VBoxContainer/LinkButton4" to="." method="_on_link_button_4_pressed"]
 [connection signal="pressed" from="Close" to="." method="_on_close_pressed"]

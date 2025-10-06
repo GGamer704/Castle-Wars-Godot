@@ -29,3 +29,8 @@ func _update_volume_label():
 
 func _on_close_pressed() -> void:
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
+
+
+
+func _on_link_button_4_pressed() -> void:
+	OS.shell_open("https://mail.google.com/mail/?view=cm&to=gammeuseonly@gmail.com")
