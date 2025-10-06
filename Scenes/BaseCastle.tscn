@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxwq7vb40u4de"]
+
+[ext_resource type="Script" uid="uid://cnj8qw0uqc5ct" path="res://Scripts/BaseCastle.gd" id="1_ymdfr"]
+[ext_resource type="Texture2D" uid="uid://cgd2wcaoqca0" path="res://Sprites/ruin_castle.png" id="2_ymdfr"]
+[ext_resource type="FontFile" uid="uid://c5dv3ntyr31l4" path="res://Sprites/Godot-Fontpack-d244bf6170b399a6d4d26a0d906058ddf2dafdf1/fonts/source-code-pro/source-code-pro-2.010R-ro-1.030R-it/TTF/SourceCodePro-Black.ttf" id="3_o6y2l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ymdfr"]
+size = Vector2(21, 20)
+
+[node name="StaticBody2D" type="StaticBody2D"]
+script = ExtResource("1_ymdfr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_ymdfr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.5, 0)
+shape = SubResource("RectangleShape2D_ymdfr")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -30.0
+offset_right = 20.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0.000172404, 0.204985, 0.663536, 1)
+theme_override_fonts/font = ExtResource("3_o6y2l")
+theme_override_font_sizes/font_size = 20
+text = "23"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+metadata/_edit_use_anchors_ = true

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://d2k43fkmcl3g4"
+path="res://.godot/imported/Videogame Fantasy (3dec9aef427a47629c514f504059f7fb).mp3-ee3f44debef52fd6e5b179894e7d4d96.mp3str"
+
+[deps]
+
+source_file="res://Audio/Videogame Fantasy (3dec9aef427a47629c514f504059f7fb).mp3"
+dest_files=["res://.godot/imported/Videogame Fantasy (3dec9aef427a47629c514f504059f7fb).mp3-ee3f44debef52fd6e5b179894e7d4d96.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

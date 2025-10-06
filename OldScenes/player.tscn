@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://lwqen4p32e0p"]
+
+[ext_resource type="Script" uid="uid://qjxydkowelw" path="res://OldScenes/player.gd" id="1_3j4pg"]
+[ext_resource type="Texture2D" uid="uid://dxo40vd5q8jq0" path="res://Sprites/player_castle.png" id="2_ehic7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
+size = Vector2(21, 20)
+
+[node name="Player" type="StaticBody2D"]
+z_index = 2
+script = ExtResource("1_3j4pg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_ehic7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.5, 0)
+shape = SubResource("RectangleShape2D_cvnsp")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -20.0
+offset_top = 2.0
+offset_right = 20.0
+offset_bottom = 25.0
+theme_override_colors/font_color = Color(0.000172404, 0.204985, 0.663536, 1)
+uppercase = true
+metadata/_edit_use_anchors_ = true

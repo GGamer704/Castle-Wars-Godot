@@ -1,0 +1,64 @@
+[gd_scene load_steps=7 format=3 uid="uid://ch7l4gyqymrh"]
+
+[ext_resource type="Script" uid="uid://d3prdu3wtasdy" path="res://Scripts/end_panel.gd" id="1_0x80r"]
+[ext_resource type="Texture2D" uid="uid://b0cb3wppakx0o" path="res://Sprites/Backround.png" id="1_wwosx"]
+[ext_resource type="FontFile" uid="uid://vbcw0mdwlmto" path="res://Sprites/Godot-Fontpack-d244bf6170b399a6d4d26a0d906058ddf2dafdf1/fonts/connection/ConnectionBold.otf" id="3_0x80r"]
+[ext_resource type="StyleBox" uid="uid://o085dxr80jih" path="res://Sprites/ButtonHover.tres" id="3_vcq4q"]
+[ext_resource type="StyleBox" uid="uid://daw4g3gjy8ck4" path="res://Sprites/Button.tres" id="4_obc4m"]
+[ext_resource type="FontFile" uid="uid://rk2b7t3tk41d" path="res://Sprites/Godot-Fontpack-d244bf6170b399a6d4d26a0d906058ddf2dafdf1/fonts/connection_ii/ConnectionII.otf" id="4_vcq4q"]
+
+[node name="EndPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0x80r")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("1_wwosx")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 294.0
+offset_top = 2.0
+offset_right = 822.0
+offset_bottom = 285.0
+theme_override_fonts/font = ExtResource("3_0x80r")
+theme_override_font_sizes/font_size = 140
+text = "
+Vicotry"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+offset_left = 363.0
+offset_top = 484.0
+offset_right = 747.0
+offset_bottom = 545.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_vcq4q")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = ExtResource("3_vcq4q")
+theme_override_styles/pressed = ExtResource("4_obc4m")
+theme_override_styles/normal = ExtResource("4_obc4m")
+text = "Go to menu"
+
+[node name="Quit" type="Button" parent="."]
+layout_mode = 2
+offset_left = 279.0
+offset_top = 338.0
+offset_right = 828.0
+offset_bottom = 408.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_vcq4q")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/hover = ExtResource("3_vcq4q")
+theme_override_styles/pressed = ExtResource("4_obc4m")
+theme_override_styles/normal = ExtResource("4_obc4m")
+text = "select new level"

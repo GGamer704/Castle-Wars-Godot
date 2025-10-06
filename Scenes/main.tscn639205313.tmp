@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://b37cra6gt7wnh"]
+
+[ext_resource type="PackedScene" uid="uid://dw6biiuv0nbwo" path="res://Scenes/enemy.tscn" id="1_8gbba"]
+[ext_resource type="Texture2D" uid="uid://dwbgstx0tyo02" path="res://Sprites/Map.png" id="1_jjvhh"]
+[ext_resource type="Script" uid="uid://2ct1ohu3al83" path="res://Scripts/main.gd" id="1_kry3j"]
+[ext_resource type="PackedScene" uid="uid://lwqen4p32e0p" path="res://Scenes/player.tscn" id="2_jjvhh"]
+[ext_resource type="PackedScene" uid="uid://bfq62m5v7l13e" path="res://Scenes/neutral.tscn" id="3_kry3j"]
+
+[node name="Main" type="Node2D"]
+scale = Vector2(2.56, 2.56)
+script = ExtResource("1_kry3j")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = -1
+offset_left = 87.8906
+offset_top = -1.5625
+offset_right = 343.891
+offset_bottom = 254.438
+size_flags_horizontal = 6
+size_flags_vertical = 6
+texture = ExtResource("1_jjvhh")
+
+[node name="Enemy" parent="." instance=ExtResource("1_8gbba")]
+position = Vector2(161.328, 197.266)
+
+[node name="Neutral" parent="." instance=ExtResource("3_kry3j")]
+position = Vector2(247.656, 173.047)
+
+[node name="Neutral2" parent="." instance=ExtResource("3_kry3j")]
+position = Vector2(228.906, 127.734)
+
+[node name="Player" parent="." instance=ExtResource("2_jjvhh")]
+position = Vector2(136.719, 69.9219)
+
+[node name="Neutral3" parent="." instance=ExtResource("3_kry3j")]
+position = Vector2(280.078, 92.1875)

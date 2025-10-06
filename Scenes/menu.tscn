@@ -1,0 +1,87 @@
+[gd_scene load_steps=6 format=3 uid="uid://bj73w7rvnkbsa"]
+
+[ext_resource type="Script" uid="uid://cw4ehdpsgibuy" path="res://Scripts/menu.gd" id="1_1rerr"]
+[ext_resource type="Texture2D" uid="uid://b0cb3wppakx0o" path="res://Sprites/Backround.png" id="2_wwsa2"]
+[ext_resource type="StyleBox" uid="uid://o085dxr80jih" path="res://Sprites/ButtonHover.tres" id="2_xhh6f"]
+[ext_resource type="StyleBox" uid="uid://daw4g3gjy8ck4" path="res://Sprites/Button.tres" id="3_cayip"]
+[ext_resource type="FontFile" uid="uid://vbcw0mdwlmto" path="res://Sprites/Godot-Fontpack-d244bf6170b399a6d4d26a0d906058ddf2dafdf1/fonts/connection/ConnectionBold.otf" id="3_wwsa2"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_1rerr")
+
+[node name="Backround" type="TextureRect" parent="."]
+z_index = -2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 2.34375
+offset_top = -0.390625
+offset_right = 1154.34
+offset_bottom = 647.609
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_wwsa2")
+expand_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+offset_right = 1163.0
+offset_bottom = 660.0
+pivot_offset = Vector2(589, 313)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="Play" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("3_wwsa2")
+theme_override_font_sizes/font_size = 100
+theme_override_styles/hover_pressed = ExtResource("3_cayip")
+theme_override_styles/hover_mirrored = ExtResource("2_xhh6f")
+theme_override_styles/hover = ExtResource("2_xhh6f")
+theme_override_styles/pressed_mirrored = ExtResource("3_cayip")
+theme_override_styles/pressed = ExtResource("3_cayip")
+theme_override_styles/normal_mirrored = ExtResource("3_cayip")
+theme_override_styles/normal = ExtResource("3_cayip")
+text = "PLay"
+
+[node name="Option" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("3_wwsa2")
+theme_override_font_sizes/font_size = 100
+theme_override_styles/hover = ExtResource("2_xhh6f")
+theme_override_styles/pressed = ExtResource("3_cayip")
+theme_override_styles/normal = ExtResource("3_cayip")
+text = "Settings"
+
+[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("3_wwsa2")
+theme_override_font_sizes/font_size = 100
+theme_override_styles/hover = ExtResource("2_xhh6f")
+theme_override_styles/pressed = ExtResource("3_cayip")
+theme_override_styles/normal = ExtResource("3_cayip")
+text = "Quit"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Option" to="." method="_on_option_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

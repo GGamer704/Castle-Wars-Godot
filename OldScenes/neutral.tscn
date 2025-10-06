@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://bfq62m5v7l13e"]
+
+[ext_resource type="Script" uid="uid://cpp8rhilpl218" path="res://OldScenes/neutral.gd" id="1_hc1gw"]
+[ext_resource type="Texture2D" uid="uid://cgd2wcaoqca0" path="res://Sprites/ruin_castle.png" id="2_atjto"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_87ypo"]
+size = Vector2(26, 20)
+
+[node name="Neutral" type="StaticBody2D"]
+script = ExtResource("1_hc1gw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_atjto")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 2
+shape = SubResource("RectangleShape2D_87ypo")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 1.0
+offset_right = 20.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.781009, 0.815782, 1, 1)

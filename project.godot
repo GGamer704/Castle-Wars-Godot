@@ -1,0 +1,48 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Castle Wars"
+run/main_scene="uid://bj73w7rvnkbsa"
+config/features=PackedStringArray("4.4", "GL Compatibility")
+config/icon="uid://dowdow34k8et1"
+
+[autoload]
+
+MusicManager="*res://Scripts/MusicManager.gd"
+
+[display]
+
+window/size/extend_to_title=true
+window/stretch/mode="canvas_items"
+
+[file_customization]
+
+folder_colors={
+"res://Audio/": "green",
+"res://OldScenes/": "gray",
+"res://Scenes/": "blue",
+"res://Scenes/levels/": "orange",
+"res://Scripts/": "purple",
+"res://Sprites/": "red"
+}
+
+[gui]
+
+theme/custom="uid://daw4g3gjy8ck4"
+
+[rendering]
+
+rendering_device/staging_buffer/texture_upload_region_size_px=32
+rendering_device/staging_buffer/texture_download_region_size_px=32
+textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
