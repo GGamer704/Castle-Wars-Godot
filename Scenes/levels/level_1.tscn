@@ -60,7 +60,7 @@ position = Vector2(544, 158)
 position = Vector2(575, 461)
 
 [node name="Neutral4" parent="." instance=ExtResource("4_wrinw")]
-position = Vector2(643, 258)
+position = Vector2(658, 258)
 
 [node name="Neutral2" parent="." instance=ExtResource("4_wrinw")]
 position = Vector2(560, 341)

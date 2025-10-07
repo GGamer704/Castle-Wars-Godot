@@ -73,7 +73,7 @@ text = "Suport "
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_b3fns")
 theme_override_font_sizes/font_size = 46
-text = "Buy me cofe"
+text = "Buy me coffe"
 uri = "https://buymeacoffee.com/ggamerthx"
 
 [node name="LinkButton2" type="LinkButton" parent="VBoxContainer"]
