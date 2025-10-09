@@ -27,6 +27,10 @@ var dot_animation_time: float = 0.0
 var arrow_timer: Timer
 var arrow_fade_alpha: float = 1.0
 
+# Audio
+var audio_player: AudioStreamPlayer
+var capture_sound := preload("res://Audio/armor-impact-from-sword-393843.mp3")
+
 @onready var label: Label = $Label
 @onready var sprite: Sprite2D = $Sprite2D
 
@@ -41,8 +45,14 @@ func _ready() -> void:
 	add_to_group("Castles")
 	troops = initial_troops
 	setup_visual_components()
+	setup_audio()
 	update_visuals()
 	attack_timer = randf() * attack_cooldown
+
+func setup_audio() -> void:
+	audio_player = AudioStreamPlayer.new()
+	audio_player.stream = capture_sound
+	add_child(audio_player)
 
 func setup_visual_components() -> void:
 	# Container for moving troops
@@ -310,6 +320,7 @@ func receive_troops(amount: int, sender_owner: String) -> void:
 			# Castle captured by attacker
 			var leftover_troops = abs(troops)
 			change_owner(sender_owner)
+			audio_player.play()  # Play capture sound
 			troops = leftover_troops
 	
 	update_visuals()

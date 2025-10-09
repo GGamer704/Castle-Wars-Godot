@@ -5,6 +5,10 @@ extends Control
 @onready var replay_button = $Button
 @onready var main_menu_button = $Quit
 
+# Preload the sound effects
+@onready var victory_sound = preload("res://Audio/8-bit-victory-sound-101319.mp3")
+@onready var defeat_sound = preload("res://Audio/8-bit-video-game-fail-version-2-145478.mp3")
+
 var is_victory: bool = false
 
 func _ready():
@@ -22,8 +26,8 @@ func show_victory():
 	result_label.modulate = Color.GOLD  # Golden color for victory
 	visible = true
 	
-	# Optional: Add victory sound effect here
-	# AudioManager.play_victory_sound()
+	# Play victory sound
+	play_sound(victory_sound)
 
 # Call this function to show defeat screen  
 func show_defeat():
@@ -32,8 +36,17 @@ func show_defeat():
 	result_label.modulate = Color.CRIMSON  # Red color for defeat
 	visible = true
 	
-	# Optional: Add defeat sound effect here
-	# AudioManager.play_defeat_sound()
+	# Play defeat sound
+	play_sound(defeat_sound)
+
+# Helper function to play sounds
+func play_sound(sound_stream: AudioStream):
+	var audio_player = AudioStreamPlayer.new()
+	add_child(audio_player)
+	audio_player.stream = sound_stream
+	audio_player.play()
+	# Clean up after sound finishes
+	audio_player.finished.connect(audio_player.queue_free)
 
 # Replay the current level
 func _on_replay_pressed():

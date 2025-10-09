@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cxwq7vb40u4de"]
+[gd_scene load_steps=6 format=3 uid="uid://cxwq7vb40u4de"]
 
 [ext_resource type="Script" uid="uid://cnj8qw0uqc5ct" path="res://Scripts/BaseCastle.gd" id="1_ymdfr"]
 [ext_resource type="Texture2D" uid="uid://cgd2wcaoqca0" path="res://Sprites/ruin_castle.png" id="2_ymdfr"]
 [ext_resource type="FontFile" uid="uid://rk2b7t3tk41d" path="res://Sprites/Godot-Fontpack-d244bf6170b399a6d4d26a0d906058ddf2dafdf1/fonts/connection_ii/ConnectionII.otf" id="3_o6y2l"]
+[ext_resource type="AudioStream" uid="uid://bcuiknj6qk5c8" path="res://Audio/armor-impact-from-sword-393843.mp3" id="4_617nv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ymdfr"]
 size = Vector2(21, 20)
@@ -38,3 +39,6 @@ texture = ExtResource("2_ymdfr")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1.5, 0)
 shape = SubResource("RectangleShape2D_ymdfr")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_617nv")
