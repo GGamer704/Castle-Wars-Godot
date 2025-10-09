@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://uqv747w2erab"]
+[gd_scene load_steps=12 format=3 uid="uid://uqv747w2erab"]
 
 [ext_resource type="Script" uid="uid://1h147fd07sdh" path="res://Scripts/select_level.gd" id="1_rqgd7"]
 [ext_resource type="Texture2D" uid="uid://b0cb3wppakx0o" path="res://Sprites/Backround.png" id="2_841yj"]
@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://dteffioghi6m6" path="res://Sprites/Levels/Level_3.png" id="8_7iseo"]
 [ext_resource type="Texture2D" uid="uid://7v20w5mx1iuj" path="res://Sprites/Levels/Level_4.png" id="9_jovpx"]
 [ext_resource type="Texture2D" uid="uid://dlxdh6y2s0dpj" path="res://Sprites/Levels/Level_5.png" id="10_pei6a"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rqgd7"]
 
 [node name="Level Select" type="Control"]
 layout_mode = 3
@@ -55,6 +57,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 6
 theme_override_fonts/font = ExtResource("3_rqgd7")
 theme_override_font_sizes/font_size = 100
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rqgd7")
 theme_override_styles/hover = ExtResource("5_ajiji")
 theme_override_styles/pressed = ExtResource("4_reqgw")
 theme_override_styles/normal = ExtResource("4_reqgw")

@@ -1,18 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://33h42stma1a3"]
+[gd_scene load_steps=9 format=3 uid="uid://33h42stma1a3"]
 
 [ext_resource type="Script" uid="uid://2ct1ohu3al83" path="res://Scripts/main.gd" id="1_evi0p"]
 [ext_resource type="Texture2D" uid="uid://b0cb3wppakx0o" path="res://Sprites/Backround.png" id="2_lsmp6"]
 [ext_resource type="Texture2D" uid="uid://dqqloiavx5bvu" path="res://Sprites/Levels/Level_2.png" id="3_evi0p"]
+[ext_resource type="StyleBox" uid="uid://xa1nuradrcey" path="res://Sprites/sidebutton_Hoveer.tres" id="3_qek6e"]
+[ext_resource type="StyleBox" uid="uid://b2yy0fwst5hmo" path="res://Sprites/sidebutton.tres" id="4_tlryv"]
 [ext_resource type="PackedScene" uid="uid://cxwq7vb40u4de" path="res://Scenes/BaseCastle.tscn" id="4_wrinw"]
 [ext_resource type="FontFile" uid="uid://41snuhix40co" path="res://Sprites/Godot-Fontpack-d244bf6170b399a6d4d26a0d906058ddf2dafdf1/fonts/xolonium/xolonium-fonts-4.1/ttf/Xolonium-Bold.ttf" id="5_chwpn"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjvhh"]
-bg_color = Color(1, 0.74902, 0, 1)
-border_width_left = 12
-border_width_top = 12
-border_width_right = 12
-border_width_bottom = 12
-border_color = Color(0.74902, 0.607843, 0.188235, 1)
+[ext_resource type="StyleBox" uid="uid://cys8n4e65i5m1" path="res://Sprites/SidePanel.tres" id="8_tlryv"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_evi0p")
@@ -34,10 +29,12 @@ offset_bottom = 82.0
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 21
+theme_override_styles/hover = ExtResource("3_qek6e")
+theme_override_styles/pressed = ExtResource("4_tlryv")
+theme_override_styles/normal = ExtResource("4_tlryv")
 text = "Quit"
 text_overrun_behavior = 4
 icon_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="Map" type="Sprite2D" parent="."]
 z_index = -1
@@ -74,7 +71,7 @@ theme_override_colors/font_color = Color(0.65098, 0.486275, 0, 1)
 theme_override_constants/line_spacing = 20
 theme_override_fonts/font = ExtResource("5_chwpn")
 theme_override_font_sizes/font_size = 19
-theme_override_styles/normal = SubResource("StyleBoxFlat_jjvhh")
+theme_override_styles/normal = ExtResource("8_tlryv")
 text = "Tmp 23
 Tmp32
 Tmo34"
@@ -86,6 +83,9 @@ offset_left = 136.0
 offset_top = 25.0
 offset_right = 244.0
 offset_bottom = 56.0
+theme_override_styles/hover = ExtResource("3_qek6e")
+theme_override_styles/pressed = ExtResource("4_tlryv")
+theme_override_styles/normal = ExtResource("4_tlryv")
 text = "SpeedButton"
 
 [node name="PauseButton" type="Button" parent="."]
@@ -93,6 +93,9 @@ offset_left = 137.0
 offset_top = 70.0
 offset_right = 245.0
 offset_bottom = 101.0
+theme_override_styles/hover = ExtResource("3_qek6e")
+theme_override_styles/pressed = ExtResource("4_tlryv")
+theme_override_styles/normal = ExtResource("4_tlryv")
 text = "PauseButton"
 
 [connection signal="pressed" from="QuitButton" to="." method="_on_button_pressed"]

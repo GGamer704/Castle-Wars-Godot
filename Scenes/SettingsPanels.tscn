@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://caxhjrabcixml"]
+[gd_scene load_steps=10 format=3 uid="uid://caxhjrabcixml"]
 
 [ext_resource type="Script" uid="uid://cvn505ig5rux" path="res://Scripts/SettingsPanel.gd" id="1_u3k2j"]
 [ext_resource type="Texture2D" uid="uid://b0cb3wppakx0o" path="res://Sprites/Backround.png" id="2_j0pa2"]
@@ -12,6 +12,8 @@ font = ExtResource("2_phw20")
 font_size = 60
 
 [sub_resource type="Theme" id="Theme_puq62"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_puq62"]
 
 [node name="Settingns" type="Control"]
 layout_mode = 3
@@ -105,6 +107,7 @@ offset_right = 591.0
 offset_bottom = 549.0
 theme_override_fonts/font = ExtResource("2_phw20")
 theme_override_font_sizes/font_size = 34
+theme_override_styles/focus = SubResource("StyleBoxEmpty_puq62")
 theme_override_styles/hover = ExtResource("3_j0pa2")
 theme_override_styles/pressed = ExtResource("4_puq62")
 theme_override_styles/normal = ExtResource("4_puq62")

@@ -2,19 +2,12 @@
 
 [ext_resource type="Script" uid="uid://2ct1ohu3al83" path="res://Scripts/main.gd" id="1_qf6rc"]
 [ext_resource type="Texture2D" uid="uid://b0cb3wppakx0o" path="res://Sprites/Backround.png" id="2_53xsp"]
-[ext_resource type="StyleBox" uid="uid://o085dxr80jih" path="res://Sprites/ButtonHover.tres" id="3_863cj"]
+[ext_resource type="StyleBox" uid="uid://xa1nuradrcey" path="res://Sprites/sidebutton_Hoveer.tres" id="3_863cj"]
 [ext_resource type="Texture2D" uid="uid://7v20w5mx1iuj" path="res://Sprites/Levels/Level_4.png" id="3_qf6rc"]
 [ext_resource type="PackedScene" uid="uid://cxwq7vb40u4de" path="res://Scenes/BaseCastle.tscn" id="4_l4wr6"]
-[ext_resource type="StyleBox" uid="uid://daw4g3gjy8ck4" path="res://Sprites/Button.tres" id="4_tsnyi"]
+[ext_resource type="StyleBox" uid="uid://b2yy0fwst5hmo" path="res://Sprites/sidebutton.tres" id="4_tsnyi"]
 [ext_resource type="FontFile" uid="uid://41snuhix40co" path="res://Sprites/Godot-Fontpack-d244bf6170b399a6d4d26a0d906058ddf2dafdf1/fonts/xolonium/xolonium-fonts-4.1/ttf/Xolonium-Bold.ttf" id="5_5rvg2"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjvhh"]
-bg_color = Color(1, 0.74902, 0, 1)
-border_width_left = 12
-border_width_top = 12
-border_width_right = 12
-border_width_bottom = 12
-border_color = Color(0.74902, 0.607843, 0.188235, 1)
+[ext_resource type="StyleBox" uid="uid://cys8n4e65i5m1" path="res://Sprites/SidePanel.tres" id="8_tsnyi"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_qf6rc")
@@ -59,7 +52,7 @@ position = Vector2(790, 399)
 castle_owner = "Enemy"
 
 [node name="Neutral" parent="." instance=ExtResource("4_l4wr6")]
-position = Vector2(640, 368)
+position = Vector2(638, 373)
 
 [node name="Neutral2" parent="." instance=ExtResource("4_l4wr6")]
 position = Vector2(704, 466)
@@ -71,7 +64,7 @@ position = Vector2(380, 230)
 position = Vector2(593, 160)
 
 [node name="Neutral5" parent="." instance=ExtResource("4_l4wr6")]
-position = Vector2(504, 210)
+position = Vector2(515, 212)
 
 [node name="Stats" type="Label" parent="."]
 offset_left = 33.0
@@ -82,7 +75,7 @@ theme_override_colors/font_color = Color(0.65098, 0.486275, 0, 1)
 theme_override_constants/line_spacing = 20
 theme_override_fonts/font = ExtResource("5_5rvg2")
 theme_override_font_sizes/font_size = 19
-theme_override_styles/normal = SubResource("StyleBoxFlat_jjvhh")
+theme_override_styles/normal = ExtResource("8_tsnyi")
 text = "Tmp 23
 Tmp32
 Tmo34"
@@ -94,6 +87,9 @@ offset_left = 136.0
 offset_top = 25.0
 offset_right = 244.0
 offset_bottom = 56.0
+theme_override_styles/hover = ExtResource("3_863cj")
+theme_override_styles/pressed = ExtResource("4_tsnyi")
+theme_override_styles/normal = ExtResource("4_tsnyi")
 text = "SpeedButton"
 
 [node name="PauseButton" type="Button" parent="."]
@@ -101,6 +97,9 @@ offset_left = 137.0
 offset_top = 70.0
 offset_right = 245.0
 offset_bottom = 101.0
+theme_override_styles/hover = ExtResource("3_863cj")
+theme_override_styles/pressed = ExtResource("4_tsnyi")
+theme_override_styles/normal = ExtResource("4_tsnyi")
 text = "PauseButton"
 
 [connection signal="pressed" from="QuitButton" to="." method="_on_button_pressed"]

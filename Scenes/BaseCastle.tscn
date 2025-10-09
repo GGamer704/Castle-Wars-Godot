@@ -2,20 +2,13 @@
 
 [ext_resource type="Script" uid="uid://cnj8qw0uqc5ct" path="res://Scripts/BaseCastle.gd" id="1_ymdfr"]
 [ext_resource type="Texture2D" uid="uid://cgd2wcaoqca0" path="res://Sprites/ruin_castle.png" id="2_ymdfr"]
-[ext_resource type="FontFile" uid="uid://c5dv3ntyr31l4" path="res://Sprites/Godot-Fontpack-d244bf6170b399a6d4d26a0d906058ddf2dafdf1/fonts/source-code-pro/source-code-pro-2.010R-ro-1.030R-it/TTF/SourceCodePro-Black.ttf" id="3_o6y2l"]
+[ext_resource type="FontFile" uid="uid://rk2b7t3tk41d" path="res://Sprites/Godot-Fontpack-d244bf6170b399a6d4d26a0d906058ddf2dafdf1/fonts/connection_ii/ConnectionII.otf" id="3_o6y2l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ymdfr"]
 size = Vector2(21, 20)
 
 [node name="StaticBody2D" type="StaticBody2D"]
 script = ExtResource("1_ymdfr")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_ymdfr")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1.5, 0)
-shape = SubResource("RectangleShape2D_ymdfr")
 
 [node name="Label" type="Label" parent="."]
 anchors_preset = 8
@@ -38,3 +31,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_ymdfr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.5, 0)
+shape = SubResource("RectangleShape2D_ymdfr")
