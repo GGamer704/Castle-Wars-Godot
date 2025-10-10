@@ -13,7 +13,9 @@ config_version=5
 config/name="Castle Wars"
 run/main_scene="uid://bj73w7rvnkbsa"
 config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/image="uid://dowdow34k8et1"
 config/icon="uid://dowdow34k8et1"
+config/windows_native_icon="res://Sprites/Logo-ICO.ico"
 
 [autoload]
 
