@@ -7,7 +7,7 @@ extends StaticBody2D
 @export var attack_range: float = 200.0
 @export var attack_cooldown: float = 5.0
 @export var min_troops_to_attack: int = 5
-@export var attack_percentage: float = 0.3
+@export var attack_percentage: float = 0.5
 @export var troop_speed: float = 200.0
 
 @export_enum("Player", "Enemy", "Neutral") var castle_owner: String = "Neutral"
@@ -51,6 +51,7 @@ func _ready() -> void:
 func setup_audio() -> void:
 	audio_player = AudioStreamPlayer.new()
 	audio_player.stream = capture_sound
+	audio_player.volume_db = -12.0
 	add_child(audio_player)
 
 func setup_visual_components() -> void:
@@ -187,6 +188,7 @@ func initiate_player_attack(target_castle: Node2D) -> bool:
 		return false
 	
 	# Calculate troops to send (half of current)
+	@warning_ignore("integer_division")
 	var troops_to_send: int = max(1, troops / 2)
 	
 	# Immediately remove troops from this castle

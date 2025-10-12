@@ -1,10 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://bj73w7rvnkbsa"]
+[gd_scene load_steps=10 format=3 uid="uid://bj73w7rvnkbsa"]
 
 [ext_resource type="Script" uid="uid://cw4ehdpsgibuy" path="res://Scripts/menu.gd" id="1_1rerr"]
 [ext_resource type="Texture2D" uid="uid://b0cb3wppakx0o" path="res://Sprites/Backround.png" id="2_wwsa2"]
 [ext_resource type="StyleBox" uid="uid://o085dxr80jih" path="res://Sprites/ButtonHover.tres" id="2_xhh6f"]
 [ext_resource type="StyleBox" uid="uid://daw4g3gjy8ck4" path="res://Sprites/Button.tres" id="3_cayip"]
 [ext_resource type="FontFile" uid="uid://vbcw0mdwlmto" path="res://Sprites/Godot-Fontpack-d244bf6170b399a6d4d26a0d906058ddf2dafdf1/fonts/connection/ConnectionBold.otf" id="3_wwsa2"]
+[ext_resource type="FontFile" uid="uid://rk2b7t3tk41d" path="res://Sprites/Godot-Fontpack-d244bf6170b399a6d4d26a0d906058ddf2dafdf1/fonts/connection_ii/ConnectionII.otf" id="6_q3rjx"]
+[ext_resource type="StyleBox" uid="uid://xa1nuradrcey" path="res://Sprites/sidebutton_Hoveer.tres" id="7_6swd7"]
+[ext_resource type="StyleBox" uid="uid://b2yy0fwst5hmo" path="res://Sprites/sidebutton.tres" id="8_7qvly"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wwsa2"]
 
@@ -87,6 +90,21 @@ theme_override_styles/pressed = ExtResource("3_cayip")
 theme_override_styles/normal = ExtResource("3_cayip")
 text = "Quit"
 
+[node name="MenuButton" type="MenuButton" parent="."]
+layout_mode = 0
+offset_left = 929.0
+offset_top = 23.0
+offset_right = 1086.0
+offset_bottom = 59.0
+theme_override_fonts/font = ExtResource("6_q3rjx")
+theme_override_font_sizes/font_size = 21
+theme_override_styles/hover = ExtResource("7_6swd7")
+theme_override_styles/pressed = ExtResource("8_7qvly")
+theme_override_styles/normal = ExtResource("8_7qvly")
+text = " How  to Play "
+flat = false
+
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Option" to="." method="_on_option_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="about_to_popup" from="MenuButton" to="." method="_on_menu_button_about_to_popup"]

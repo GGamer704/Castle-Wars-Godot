@@ -10,11 +10,12 @@ func _ready():
 
 func _on_node_added(node):
 	if node is Button:
-		node.pressed.connect(_on_button_pressed)  # Remove .bind(node)
+		node.pressed.connect(_on_button_pressed)
 
-func _on_button_pressed():  # No parameter needed
+func _on_button_pressed():
 	var audio_player = AudioStreamPlayer.new()
 	add_child(audio_player)
 	audio_player.stream = click_sound
+	audio_player.volume_db = -9.0  # 50% volume reduction (approximately -6 dB)
 	audio_player.play()
 	audio_player.finished.connect(audio_player.queue_free)
