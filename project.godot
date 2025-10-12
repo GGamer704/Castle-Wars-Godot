@@ -38,10 +38,6 @@ folder_colors={
 "res://Sprites/": "red"
 }
 
-[gui]
-
-theme/custom="uid://daw4g3gjy8ck4"
-
 [rendering]
 
 rendering_device/staging_buffer/texture_upload_region_size_px=32

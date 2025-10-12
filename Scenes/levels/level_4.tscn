@@ -44,7 +44,6 @@ texture = ExtResource("3_dvrgg")
 
 [node name="Player" parent="." instance=ExtResource("4_3ntyy")]
 position = Vector2(386, 352)
-castle_owner = "Player"
 
 [node name="Enemy" parent="." instance=ExtResource("4_3ntyy")]
 position = Vector2(660, 116)
@@ -52,6 +51,7 @@ castle_owner = "Enemy"
 
 [node name="Neutral" parent="." instance=ExtResource("4_3ntyy")]
 position = Vector2(406, 455)
+castle_owner = "Player"
 
 [node name="Neutral2" parent="." instance=ExtResource("4_3ntyy")]
 position = Vector2(565, 435)

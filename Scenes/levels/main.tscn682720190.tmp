@@ -1,0 +1,101 @@
+[gd_scene load_steps=10 format=3 uid="uid://b37cra6gt7wnh"]
+
+[ext_resource type="Script" uid="uid://2ct1ohu3al83" path="res://Scripts/main.gd" id="1_kry3j"]
+[ext_resource type="Texture2D" uid="uid://b0cb3wppakx0o" path="res://Sprites/Backround.png" id="2_21xkr"]
+[ext_resource type="FontFile" uid="uid://gtv0xtpokrdi" path="res://Sprites/Godot-Fontpack-d244bf6170b399a6d4d26a0d906058ddf2dafdf1/fonts/connection/Connection.otf" id="3_by8mm"]
+[ext_resource type="Texture2D" uid="uid://b07p6g6lxjvec" path="res://Sprites/Levels/Level_1.png" id="3_yukic"]
+[ext_resource type="PackedScene" uid="uid://cxwq7vb40u4de" path="res://Scenes/BaseCastle.tscn" id="4_jjvhh"]
+[ext_resource type="StyleBox" uid="uid://xa1nuradrcey" path="res://Sprites/sidebutton_Hoveer.tres" id="4_w00ya"]
+[ext_resource type="FontFile" uid="uid://41snuhix40co" path="res://Sprites/Godot-Fontpack-d244bf6170b399a6d4d26a0d906058ddf2dafdf1/fonts/xolonium/xolonium-fonts-4.1/ttf/Xolonium-Bold.ttf" id="5_kry3j"]
+[ext_resource type="StyleBox" uid="uid://b2yy0fwst5hmo" path="res://Sprites/sidebutton.tres" id="5_qy0gr"]
+[ext_resource type="StyleBox" uid="uid://cys8n4e65i5m1" path="res://Sprites/SidePanel.tres" id="9_rngb2"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_kry3j")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+z_index = -2
+offset_right = 1152.0
+offset_bottom = 648.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("2_21xkr")
+stretch_mode = 1
+
+[node name="QuitButton" type="Button" parent="."]
+offset_left = 45.0
+offset_top = 44.0
+offset_right = 103.0
+offset_bottom = 82.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("3_by8mm")
+theme_override_font_sizes/font_size = 21
+theme_override_styles/hover = ExtResource("4_w00ya")
+theme_override_styles/pressed = ExtResource("5_qy0gr")
+theme_override_styles/normal = ExtResource("5_qy0gr")
+text = "Quit"
+text_overrun_behavior = 4
+icon_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Map" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(568, 296)
+scale = Vector2(2.21094, 2.06836)
+texture = ExtResource("3_yukic")
+
+[node name="Player" parent="." instance=ExtResource("4_jjvhh")]
+position = Vector2(490, 295)
+castle_owner = "Player"
+
+[node name="Enemy" parent="." instance=ExtResource("4_jjvhh")]
+position = Vector2(724, 395)
+castle_owner = "Enemy"
+
+[node name="Neutral" parent="." instance=ExtResource("4_jjvhh")]
+position = Vector2(521, 382)
+
+[node name="Neutral2" parent="." instance=ExtResource("4_jjvhh")]
+position = Vector2(590, 407)
+
+[node name="Stats" type="Label" parent="."]
+offset_left = 33.0
+offset_top = 126.0
+offset_right = 266.0
+offset_bottom = 521.0
+theme_override_colors/font_color = Color(0.65098, 0.486275, 0, 1)
+theme_override_constants/line_spacing = 20
+theme_override_fonts/font = ExtResource("5_kry3j")
+theme_override_font_sizes/font_size = 19
+theme_override_styles/normal = ExtResource("9_rngb2")
+text = "Tmp 23
+Tmp32
+Tmo34"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpeedButton" type="Button" parent="."]
+offset_left = 136.0
+offset_top = 25.0
+offset_right = 244.0
+offset_bottom = 56.0
+theme_override_fonts/font = ExtResource("3_by8mm")
+theme_override_styles/hover = ExtResource("4_w00ya")
+theme_override_styles/pressed = ExtResource("5_qy0gr")
+theme_override_styles/normal = ExtResource("5_qy0gr")
+text = " SpeedButton "
+metadata/_edit_use_anchors_ = true
+
+[node name="PauseButton" type="Button" parent="."]
+offset_left = 137.0
+offset_top = 70.0
+offset_right = 245.0
+offset_bottom = 101.0
+theme_override_fonts/font = ExtResource("3_by8mm")
+theme_override_styles/hover = ExtResource("4_w00ya")
+theme_override_styles/pressed = ExtResource("5_qy0gr")
+theme_override_styles/normal = ExtResource("5_qy0gr")
+text = " PausButton "
+
+[connection signal="pressed" from="QuitButton" to="." method="_on_button_pressed"]

@@ -10,9 +10,9 @@ func _ready():
 
 func _on_node_added(node):
 	if node is Button:
-		node.pressed.connect(_on_button_pressed.bind(node))
+		node.pressed.connect(_on_button_pressed)  # Remove .bind(node)
 
-func _on_button_pressed(button):
+func _on_button_pressed():  # No parameter needed
 	var audio_player = AudioStreamPlayer.new()
 	add_child(audio_player)
 	audio_player.stream = click_sound

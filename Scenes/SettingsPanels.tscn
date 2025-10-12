@@ -100,11 +100,18 @@ text = "Email"
 uri = "gammeuseonly@gmail.com"
 
 [node name="Close" type="Button" parent="."]
-layout_mode = 0
-offset_left = 499.0
-offset_top = 504.0
-offset_right = 591.0
-offset_bottom = 549.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 4.203
+anchor_top = 2.412
+anchor_right = 4.203
+anchor_bottom = 2.412
+offset_left = -45.999
+offset_top = 34.6
+offset_right = 46.001
+offset_bottom = 79.6
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_phw20")
 theme_override_font_sizes/font_size = 34
 theme_override_styles/focus = SubResource("StyleBoxEmpty_puq62")
