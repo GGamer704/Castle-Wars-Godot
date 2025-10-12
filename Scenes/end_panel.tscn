@@ -63,4 +63,4 @@ theme_override_font_sizes/font_size = 50
 theme_override_styles/hover = ExtResource("3_vcq4q")
 theme_override_styles/pressed = ExtResource("4_obc4m")
 theme_override_styles/normal = ExtResource("4_obc4m")
-text = "select new level"
+text = "Select New Level"
