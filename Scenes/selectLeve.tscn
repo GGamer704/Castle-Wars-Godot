@@ -1,0 +1,162 @@
+[gd_scene load_steps=17 format=3 uid="uid://c1365bciq6uci"]
+
+[ext_resource type="Script" uid="uid://1h147fd07sdh" path="res://Scripts/select_level.gd" id="1_jynqn"]
+[ext_resource type="Texture2D" uid="uid://b0cb3wppakx0o" path="res://Sprites/Backround.png" id="2_6k3xh"]
+[ext_resource type="FontFile" uid="uid://vbcw0mdwlmto" path="res://Sprites/Godot-Fontpack-d244bf6170b399a6d4d26a0d906058ddf2dafdf1/fonts/connection/ConnectionBold.otf" id="3_hkvgj"]
+[ext_resource type="StyleBox" uid="uid://o085dxr80jih" path="res://Sprites/ButtonHover.tres" id="4_7v3ud"]
+[ext_resource type="StyleBox" uid="uid://daw4g3gjy8ck4" path="res://Sprites/Button.tres" id="5_kiaup"]
+[ext_resource type="Texture2D" uid="uid://b07p6g6lxjvec" path="res://Sprites/Levels/Level_1.png" id="6_bbkym"]
+[ext_resource type="Texture2D" uid="uid://dqqloiavx5bvu" path="res://Sprites/Levels/Level_2.png" id="7_atajs"]
+[ext_resource type="Texture2D" uid="uid://dteffioghi6m6" path="res://Sprites/Levels/Level_3.png" id="8_kkqy2"]
+[ext_resource type="Texture2D" uid="uid://7v20w5mx1iuj" path="res://Sprites/Levels/Level_4.png" id="9_y1oee"]
+[ext_resource type="Texture2D" uid="uid://dlxdh6y2s0dpj" path="res://Sprites/Levels/Level_5.png" id="10_vpvqv"]
+[ext_resource type="Texture2D" uid="uid://bahqluh58cjkw" path="res://Sprites/Levels/Level_6.png" id="11_6v6hv"]
+[ext_resource type="Texture2D" uid="uid://bvwsee86u61qi" path="res://Sprites/Levels/Level_7.png" id="12_cp46j"]
+[ext_resource type="Texture2D" uid="uid://s3hxaigdbhv6" path="res://Sprites/Levels/Leve_8.png" id="13_1bbyr"]
+[ext_resource type="Texture2D" uid="uid://bnn0skelnlq2h" path="res://Sprites/Levels/Level_9.png" id="14_4sw26"]
+[ext_resource type="Texture2D" uid="uid://broettl7nrwlx" path="res://Sprites/Levels/Level_10.png" id="15_j7t1r"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rqgd7"]
+
+[node name="Level Select" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_jynqn")
+
+[node name="Backround" type="TextureRect" parent="."]
+z_index = -2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 2.34375
+offset_top = -0.390625
+offset_right = 1154.34
+offset_bottom = 647.609
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_6k3xh")
+expand_mode = 2
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 318.0
+offset_top = 83.0
+offset_right = 1148.0
+offset_bottom = 148.0
+theme_override_fonts/font = ExtResource("3_hkvgj")
+theme_override_font_sizes/font_size = 64
+text = "SELECT LEVEL"
+script = ExtResource("1_jynqn")
+
+[node name="Quit" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 531.0
+offset_top = 497.0
+offset_right = 627.0
+offset_bottom = 554.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("3_hkvgj")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rqgd7")
+theme_override_styles/hover = ExtResource("4_7v3ud")
+theme_override_styles/pressed = ExtResource("5_kiaup")
+theme_override_styles/normal = ExtResource("5_kiaup")
+text = "Go Back"
+
+[node name="VBoxContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_left = 41.0
+offset_top = 220.0
+offset_right = 1554.0
+offset_bottom = 544.0
+scale = Vector2(0.684552, 0.715764)
+
+[node name="Container" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Level1" type="TextureButton" parent="VBoxContainer/Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = ExtResource("6_bbkym")
+texture_hover = ExtResource("6_bbkym")
+
+[node name="Level2" type="TextureButton" parent="VBoxContainer/Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = ExtResource("7_atajs")
+
+[node name="Level3" type="TextureButton" parent="VBoxContainer/Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = ExtResource("8_kkqy2")
+
+[node name="Level4" type="TextureButton" parent="VBoxContainer/Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = ExtResource("9_y1oee")
+
+[node name="Level5" type="TextureButton" parent="VBoxContainer/Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = ExtResource("10_vpvqv")
+
+[node name="Level6" type="TextureButton" parent="VBoxContainer/Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = ExtResource("11_6v6hv")
+
+[node name="Level7" type="TextureButton" parent="VBoxContainer/Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = ExtResource("12_cp46j")
+
+[node name="Level8" type="TextureButton" parent="VBoxContainer/Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = ExtResource("14_4sw26")
+
+[node name="Level9" type="TextureButton" parent="VBoxContainer/Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = ExtResource("13_1bbyr")
+
+[node name="Level10" type="TextureButton" parent="VBoxContainer/Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = ExtResource("15_j7t1r")
+
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="VBoxContainer/Container/Level1" to="." method="_on_level_1_pressed"]
+[connection signal="pressed" from="VBoxContainer/Container/Level2" to="." method="_on_level_2_pressed"]
+[connection signal="pressed" from="VBoxContainer/Container/Level3" to="." method="_on_level_3_pressed"]
+[connection signal="pressed" from="VBoxContainer/Container/Level4" to="." method="_on_level_4_pressed"]
+[connection signal="pressed" from="VBoxContainer/Container/Level5" to="." method="_on_level_5_pressed"]
+[connection signal="pressed" from="VBoxContainer/Container/Level6" to="." method="_on_level_6_pressed"]
+[connection signal="pressed" from="VBoxContainer/Container/Level7" to="." method="_on_level_7_pressed"]
+[connection signal="pressed" from="VBoxContainer/Container/Level8" to="." method="_on_level_8_pressed"]
+[connection signal="pressed" from="VBoxContainer/Container/Level9" to="." method="_on_level_9_pressed"]
+[connection signal="pressed" from="VBoxContainer/Container/Level10" to="." method="_on_level_10_pressed"]

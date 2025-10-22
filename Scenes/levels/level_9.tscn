@@ -1,0 +1,112 @@
+[gd_scene load_steps=9 format=3 uid="uid://bbkotm31e1o8x"]
+
+[ext_resource type="Script" uid="uid://2ct1ohu3al83" path="res://Scripts/main.gd" id="1_0i4fs"]
+[ext_resource type="Texture2D" uid="uid://b0cb3wppakx0o" path="res://Sprites/Backround.png" id="2_1mbry"]
+[ext_resource type="StyleBox" uid="uid://xa1nuradrcey" path="res://Sprites/sidebutton_Hoveer.tres" id="3_7vld3"]
+[ext_resource type="StyleBox" uid="uid://b2yy0fwst5hmo" path="res://Sprites/sidebutton.tres" id="4_a0hjo"]
+[ext_resource type="Texture2D" uid="uid://broettl7nrwlx" path="res://Sprites/Levels/Level_10.png" id="5_0i4fs"]
+[ext_resource type="PackedScene" uid="uid://cxwq7vb40u4de" path="res://Scenes/BaseCastle.tscn" id="6_pyo1i"]
+[ext_resource type="FontFile" uid="uid://41snuhix40co" path="res://Sprites/Godot-Fontpack-d244bf6170b399a6d4d26a0d906058ddf2dafdf1/fonts/xolonium/xolonium-fonts-4.1/ttf/Xolonium-Bold.ttf" id="7_anuom"]
+[ext_resource type="StyleBox" uid="uid://cys8n4e65i5m1" path="res://Sprites/SidePanel.tres" id="8_hrb3l"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_0i4fs")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+z_index = -2
+offset_right = 1152.0
+offset_bottom = 648.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("2_1mbry")
+stretch_mode = 1
+
+[node name="QuitButton" type="Button" parent="."]
+offset_left = 45.0
+offset_top = 44.0
+offset_right = 103.0
+offset_bottom = 82.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 21
+theme_override_styles/hover = ExtResource("3_7vld3")
+theme_override_styles/pressed = ExtResource("4_a0hjo")
+theme_override_styles/normal = ExtResource("4_a0hjo")
+text = "Quit"
+text_overrun_behavior = 4
+icon_alignment = 1
+
+[node name="Map" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(568, 296)
+scale = Vector2(2.21094, 2.06836)
+texture = ExtResource("5_0i4fs")
+
+[node name="Enemy" parent="." instance=ExtResource("6_pyo1i")]
+position = Vector2(377, 286)
+castle_owner = "Enemy"
+ai_strategy = "Aggressive"
+
+[node name="Player" parent="." instance=ExtResource("6_pyo1i")]
+position = Vector2(766, 345)
+castle_owner = "Player"
+
+[node name="Neutral" parent="." instance=ExtResource("6_pyo1i")]
+position = Vector2(555, 466)
+
+[node name="Neutral2" parent="." instance=ExtResource("6_pyo1i")]
+position = Vector2(598, 356)
+
+[node name="Neutral3" parent="." instance=ExtResource("6_pyo1i")]
+position = Vector2(679, 177)
+
+[node name="Neutral10" parent="." instance=ExtResource("6_pyo1i")]
+position = Vector2(665, 288)
+
+[node name="Neutral4" parent="." instance=ExtResource("6_pyo1i")]
+position = Vector2(569, 86)
+
+[node name="Neutral5" parent="." instance=ExtResource("6_pyo1i")]
+position = Vector2(564, 223)
+
+[node name="Neutral6" parent="." instance=ExtResource("6_pyo1i")]
+position = Vector2(415, 178)
+
+[node name="Stats" type="Label" parent="."]
+offset_left = 33.0
+offset_top = 126.0
+offset_right = 266.0
+offset_bottom = 521.0
+theme_override_colors/font_color = Color(0.65098, 0.486275, 0, 1)
+theme_override_constants/line_spacing = 20
+theme_override_fonts/font = ExtResource("7_anuom")
+theme_override_font_sizes/font_size = 19
+theme_override_styles/normal = ExtResource("8_hrb3l")
+text = "Tmp 23
+Tmp32
+Tmo34"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpeedButton" type="Button" parent="."]
+offset_left = 136.0
+offset_top = 25.0
+offset_right = 244.0
+offset_bottom = 56.0
+theme_override_styles/hover = ExtResource("3_7vld3")
+theme_override_styles/pressed = ExtResource("4_a0hjo")
+theme_override_styles/normal = ExtResource("4_a0hjo")
+text = "SpeedButton"
+
+[node name="PauseButton" type="Button" parent="."]
+offset_left = 137.0
+offset_top = 70.0
+offset_right = 245.0
+offset_bottom = 101.0
+theme_override_styles/hover = ExtResource("3_7vld3")
+theme_override_styles/pressed = ExtResource("4_a0hjo")
+theme_override_styles/normal = ExtResource("4_a0hjo")
+text = "PauseButton"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="QuitButton" to="." method="_on_button_pressed"]

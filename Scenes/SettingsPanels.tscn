@@ -45,7 +45,7 @@ offset_left = 215.0
 offset_top = 32.0
 offset_right = 879.0
 offset_bottom = 55.0
-text = "Autdio Settings"
+text = "Audio Settings"
 label_settings = SubResource("LabelSettings_j0pa2")
 horizontal_alignment = 1
 
@@ -75,7 +75,7 @@ text = "Suport "
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_b3fns")
 theme_override_font_sizes/font_size = 46
-text = "Buy me coffe"
+text = "Buy Me coffe"
 uri = "https://buymeacoffee.com/ggamerthx"
 
 [node name="LinkButton2" type="LinkButton" parent="VBoxContainer"]

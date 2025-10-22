@@ -56,4 +56,4 @@ func _on_replay_pressed():
 
 # Return to main menu
 func _on_main_menu_pressed():
-	get_tree().change_scene_to_file("res://Scenes/selectLevel.tscn")
+	get_tree().change_scene_to_file("res://Scenes/selectLeve.tscn")

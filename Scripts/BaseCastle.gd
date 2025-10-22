@@ -1,4 +1,4 @@
-# BaseCastle.gd
+# BaseCastle.gd - Enhanced AI Version
 extends StaticBody2D
 
 @export var max_troops: int = 25
@@ -11,6 +11,10 @@ extends StaticBody2D
 @export var troop_speed: float = 200.0
 
 @export_enum("Player", "Enemy", "Neutral") var castle_owner: String = "Neutral"
+
+# AI Enhancement Variables
+@export var ai_difficulty: float = 1.0  # 0.5 = easy, 1.0 = normal, 1.5 = hard
+@export var ai_strategy: String = "balanced"  # "aggressive", "defensive", "balanced", "opportunistic"
 
 var troops: int = 10
 var timer := 0.0
@@ -33,12 +37,17 @@ var capture_sound := preload("res://Audio/armor-impact-from-sword-393843.mp3")
 
 var troop_group: Node2D = null
 
-# New attack system - store attacks in flight
-var incoming_attacks: Array = []  # Stores {troops: int, owner: String, arrival_time: float}
-var attack_visuals: Array = []    # Stores visual representation data
+var incoming_attacks: Array = []
+var attack_visuals: Array = []
 
 var TroopDotScene := preload("res://Scenes/TroopDot.tscn")
 var active_tweens: Array = []
+
+# AI Strategic Memory
+var last_attack_time: float = 0.0
+var recent_targets: Array = []  # Track last 3 targets to avoid repetition
+var threat_assessment: Dictionary = {}  # Track dangerous enemies
+var coordination_check_timer: float = 0.0
 
 func _ready() -> void:
 	add_to_group("Castles")
@@ -47,6 +56,29 @@ func _ready() -> void:
 	setup_audio()
 	update_visuals()
 	attack_timer = randf() * attack_cooldown
+	
+	# Initialize AI based on difficulty
+	adjust_ai_difficulty()
+
+func adjust_ai_difficulty() -> void:
+	if castle_owner == "Enemy":
+		match ai_difficulty:
+			0.5:  # Easy
+				attack_cooldown = 8.0
+				attack_percentage = 0.3
+				min_troops_to_attack = 8
+			1.0:  # Normal
+				attack_cooldown = 5.0
+				attack_percentage = 0.5
+				min_troops_to_attack = 5
+			1.5:  # Hard
+				attack_cooldown = 3.5
+				attack_percentage = 0.6
+				min_troops_to_attack = 3
+			_:
+				attack_cooldown = 5.0 / ai_difficulty
+				attack_percentage = clamp(0.4 * ai_difficulty, 0.2, 0.7)
+				min_troops_to_attack = max(2, int(8.0 / ai_difficulty))
 
 func setup_audio() -> void:
 	audio_player = AudioStreamPlayer.new()
@@ -68,11 +100,20 @@ func _process(delta: float) -> void:
 		timer = 0.0
 		update_visuals()
 
-	# Enemy AI
+	# Enhanced Enemy AI
 	if castle_owner == "Enemy":
 		attack_timer += delta
-		if attack_timer >= attack_cooldown and not is_attacking:
-			consider_attack()
+		coordination_check_timer += delta
+		
+		# Update threat assessment periodically
+		if coordination_check_timer >= 2.0:
+			update_threat_assessment()
+			coordination_check_timer = 0.0
+		
+		# Check for attacks more frequently on higher difficulties
+		var check_frequency = attack_cooldown * (1.0 / ai_difficulty)
+		if attack_timer >= check_frequency and not is_attacking:
+			consider_smart_attack()
 			attack_timer = 0.0
 
 	# Process incoming attacks
@@ -187,17 +228,14 @@ func initiate_player_attack(target_castle: Node2D) -> bool:
 		print("Target castle is out of attack range!")
 		return false
 	
-	# Calculate troops to send (half of current)
 	@warning_ignore("integer_division")
 	var troops_to_send: int = max(1, troops / 2)
 	
-	# Immediately remove troops from this castle
 	troops -= troops_to_send
 	update_visuals()
 	
 	print("[ATTACK LAUNCHED] %s sending %d troops to %s (Remaining: %d)" % [name, troops_to_send, target_castle.name, troops])
 	
-	# Launch the attack
 	launch_attack(target_castle, troops_to_send)
 	
 	return true
@@ -206,18 +244,14 @@ func launch_attack(target_castle: Node2D, troop_count: int) -> void:
 	if not target_castle or not is_instance_valid(target_castle):
 		return
 	
-	# Calculate travel time
 	var distance = global_position.distance_to(target_castle.global_position)
 	var travel_time = distance / troop_speed
 	
-	# Register attack with target castle
 	if target_castle.has_method("register_incoming_attack"):
 		target_castle.register_incoming_attack(troop_count, castle_owner, travel_time)
 	
-	# Create visuals
 	create_attack_visuals(target_castle, troop_count, travel_time)
 	
-	# Show arrow
 	current_target = target_castle
 	show_attack_arrow(target_castle)
 
@@ -236,7 +270,6 @@ func process_incoming_attacks(delta: float) -> void:
 		attack.time_remaining -= delta
 		
 		if attack.time_remaining <= 0:
-			# Attack has arrived - resolve combat
 			resolve_combat(attack.troops, attack.owner)
 			incoming_attacks.remove_at(i)
 
@@ -245,24 +278,20 @@ func resolve_combat(incoming_troops: int, attacker_owner: String) -> void:
 	print("Defender: %s (Owner: %s, Troops: %d)" % [name, castle_owner, troops])
 	print("Attacker: %s (Troops: %d)" % [attacker_owner, incoming_troops])
 	
-	# Same owner = reinforcement
 	if attacker_owner == castle_owner:
 		troops = min(troops + incoming_troops, max_troops)
 		print("RESULT: Reinforcement! New total: %d troops" % troops)
 		update_visuals()
 		return
 	
-	# Different owner = combat
 	var defender_initial = troops
 	var attacker_initial = incoming_troops
 	
-	# Calculate result: positive = attacker wins, negative = defender wins, zero = tie
 	var result = incoming_troops - troops
 	
 	print("Combat calculation: %d (attacker) - %d (defender) = %d" % [attacker_initial, defender_initial, result])
 	
 	if result > 0:
-		# Attacker wins - castle changes hands
 		print("OUTCOME: Attacker WINS!")
 		print("  Castle changes from %s to %s" % [castle_owner, attacker_owner])
 		print("  Surviving troops: %d" % result)
@@ -274,14 +303,12 @@ func resolve_combat(incoming_troops: int, attacker_owner: String) -> void:
 			audio_player.play()
 	
 	elif result < 0:
-		# Defender wins - keeps castle with reduced troops
 		print("OUTCOME: Defender WINS!")
 		print("  Surviving troops: %d" % abs(result))
 		
 		troops = abs(result)
 	
 	else:
-		# Exact tie - castle becomes neutral with 0 troops
 		print("OUTCOME: DRAW!")
 		print("  Castle becomes Neutral with 0 troops")
 		
@@ -330,16 +357,13 @@ func update_attack_visuals(delta: float) -> void:
 		var progress = visual.elapsed / visual.travel_time
 		
 		if progress >= 1.0:
-			# Visual reached destination
 			if visual.node and is_instance_valid(visual.node):
 				visual.node.queue_free()
 			attack_visuals.remove_at(i)
 			
-			# Check if all visuals are done
 			if attack_visuals.is_empty():
 				is_attacking = false
 		else:
-			# Animate the visual
 			if visual.node and is_instance_valid(visual.node):
 				var base_pos = visual.start_pos.lerp(visual.end_pos, progress)
 				var wobble = sin(progress * PI * 3.0) * 15.0
@@ -457,19 +481,359 @@ func change_owner(new_owner: String) -> void:
 	
 	if castle_owner == "Enemy":
 		attack_timer = randf() * attack_cooldown
+		adjust_ai_difficulty()
 
 func get_troop_count() -> int:
 	return troops
 
-func consider_attack() -> void:
+# ============ ENHANCED AI SYSTEM ============
+
+func update_threat_assessment() -> void:
+	"""Assess nearby threats and update strategic memory"""
+	threat_assessment.clear()
+	
+	var castles = get_tree().get_nodes_in_group("Castles")
+	for castle in castles:
+		if not is_instance_valid(castle) or castle == self:
+			continue
+		
+		var distance = global_position.distance_to(castle.global_position)
+		if distance <= attack_range * 1.5:  # Extended awareness range
+			var threat_level = calculate_threat_level(castle)
+			threat_assessment[castle] = threat_level
+
+func calculate_threat_level(target: Node) -> float:
+	"""Calculate how dangerous a castle is to this AI"""
+	if not target or not is_instance_valid(target):
+		return 0.0
+	
+	var threat: float = 0.0
+	
+	# Enemy troops are threatening
+	if "castle_owner" in target:
+		if target.castle_owner == "Player":
+			var enemy_troops = target.get_troop_count() if target.has_method("get_troop_count") else 0
+			threat += enemy_troops * 2.0
+			
+			# Check for incoming reinforcements
+			if "incoming_attacks" in target:
+				for attack in target.incoming_attacks:
+					if attack.owner == "Player":
+						threat += attack.troops
+	
+	return threat
+
+func consider_smart_attack() -> void:
+	"""Enhanced AI decision-making"""
 	if castle_owner != "Enemy" or troops <= min_troops_to_attack:
 		return
 	
-	var best_target = find_best_target()
-	if best_target and is_instance_valid(best_target):
-		var nearby_player_castles = get_nearby_player_castles()
-		var attack_multiplier = 1.0 + 0.5 * nearby_player_castles.size()
-		execute_visual_attack(best_target, attack_multiplier)
+	# Choose strategy based on AI type
+	var target = null
+	match ai_strategy:
+		"aggressive":
+			target = find_aggressive_target()
+		"defensive":
+			target = find_defensive_target()
+		"opportunistic":
+			target = find_opportunistic_target()
+		_:  # balanced
+			target = find_balanced_target()
+	
+	if target and is_instance_valid(target):
+		execute_strategic_attack(target)
+
+func find_aggressive_target() -> Node:
+	"""Focus on attacking player castles, prioritize high-value targets"""
+	var castles = get_tree().get_nodes_in_group("Castles")
+	var best_target: Node = null
+	var best_score: float = -1.0
+	
+	for castle in castles:
+		if not is_valid_target(castle):
+			continue
+		
+		var score: float = 0.0
+		
+		# Heavily prioritize player castles
+		if castle.castle_owner == "Player":
+			score += 200.0
+			
+			# Prefer castles we can actually win against
+			var enemy_troops = castle.get_troop_count()
+			var attack_force = calculate_attack_force(1.0)
+			if attack_force > enemy_troops:
+				score += 150.0
+			else:
+				score -= abs(attack_force - enemy_troops) * 5.0
+		
+		# Secondary target: neutrals
+		elif castle.castle_owner == "Neutral":
+			score += 50.0
+		
+		# Distance factor (prefer closer targets)
+		var distance = global_position.distance_to(castle.global_position)
+		score += (attack_range - distance) / attack_range * 50.0
+		
+		if score > best_score:
+			best_score = score
+			best_target = castle
+	
+	return best_target
+
+func find_defensive_target() -> Node:
+	"""Focus on securing nearby neutrals and eliminating weak threats"""
+	var castles = get_tree().get_nodes_in_group("Castles")
+	var best_target: Node = null
+	var best_score: float = -1.0
+	
+	for castle in castles:
+		if not is_valid_target(castle):
+			continue
+		
+		var score: float = 0.0
+		var distance = global_position.distance_to(castle.global_position)
+		
+		# Prefer close targets
+		score += (attack_range - distance) / attack_range * 100.0
+		
+		# Prioritize neutrals for expansion
+		if castle.castle_owner == "Neutral":
+			score += 120.0
+		
+		# Only attack player if overwhelming advantage
+		elif castle.castle_owner == "Player":
+			var enemy_troops = castle.get_troop_count()
+			var attack_force = calculate_attack_force(1.0)
+			if attack_force > enemy_troops * 1.5:
+				score += 80.0
+			else:
+				score -= 50.0  # Avoid risky attacks
+		
+		if score > best_score:
+			best_score = score
+			best_target = castle
+	
+	return best_target
+
+func find_opportunistic_target() -> Node:
+	"""Wait for perfect opportunities - weak targets or guaranteed wins"""
+	var castles = get_tree().get_nodes_in_group("Castles")
+	var best_target: Node = null
+	var best_score: float = -1.0
+	
+	for castle in castles:
+		if not is_valid_target(castle):
+			continue
+		
+		var enemy_troops = castle.get_troop_count()
+		var attack_force = calculate_attack_force(1.0)
+		
+		# Only consider if we have clear advantage
+		if attack_force <= enemy_troops * 1.2:
+			continue
+		
+		var score: float = attack_force - enemy_troops
+		
+		# Bonus for very weak targets
+		if enemy_troops < 3:
+			score += 100.0
+		
+		# Bonus for neutrals (easy expansion)
+		if castle.castle_owner == "Neutral":
+			score += 80.0
+		
+		# Bonus for player castles (progress toward victory)
+		elif castle.castle_owner == "Player":
+			score += 60.0
+		
+		if score > best_score:
+			best_score = score
+			best_target = castle
+	
+	return best_target
+
+func find_balanced_target() -> Node:
+	"""Balance between offense and defense - the default smart strategy"""
+	var castles = get_tree().get_nodes_in_group("Castles")
+	var best_target: Node = null
+	var best_score: float = -1.0
+	
+	# Count our territory vs player territory
+	var enemy_castle_count = count_castles_by_owner("Enemy")
+	var player_castle_count = count_castles_by_owner("Player")
+	
+	for castle in castles:
+		if not is_valid_target(castle):
+			continue
+		
+		var score: float = 0.0
+		var distance = global_position.distance_to(castle.global_position)
+		var enemy_troops = castle.get_troop_count()
+		var attack_force = calculate_attack_force(1.0)
+		
+		# Base score on winability
+		var troop_difference = attack_force - enemy_troops
+		if troop_difference > 0:
+			score += troop_difference * 10.0
+		else:
+			score += troop_difference * 20.0  # Penalty for risky attacks
+		
+		# Strategic value based on game state
+		if castle.castle_owner == "Player":
+			# If player is winning, be more aggressive
+			if player_castle_count > enemy_castle_count:
+				score += 150.0
+			else:
+				score += 80.0
+		
+		elif castle.castle_owner == "Neutral":
+			score += 100.0
+			# Neutrals are safer picks
+			score += 30.0
+		
+		# Distance factor
+		score += (attack_range - distance) / attack_range * 40.0
+		
+		# Avoid recently attacked targets (variety)
+		if recent_targets.has(castle):
+			score -= 60.0
+		
+		# Coordination bonus - check if other AI castles can follow up
+		var allied_support = count_nearby_allied_castles(castle.global_position)
+		score += allied_support * 25.0
+		
+		if score > best_score:
+			best_score = score
+			best_target = castle
+	
+	return best_target
+
+func is_valid_target(castle: Node) -> bool:
+	"""Check if castle is a valid attack target"""
+	if not castle or not is_instance_valid(castle):
+		return false
+	if castle == self:
+		return false
+	if "castle_owner" not in castle:
+		return false
+	if castle.castle_owner == "Enemy":
+		return false
+	
+	var distance = global_position.distance_to(castle.global_position)
+	return distance <= attack_range
+
+func calculate_attack_force(multiplier: float = 1.0) -> int:
+	"""Calculate how many troops would be sent in an attack"""
+	var available_troops = troops - min_troops_to_attack
+	return max(1, int(float(available_troops) * attack_percentage * multiplier))
+
+func count_castles_by_owner(owner: String) -> int:
+	"""Count total castles owned by a specific owner"""
+	var count = 0
+	var castles = get_tree().get_nodes_in_group("Castles")
+	for castle in castles:
+		if is_instance_valid(castle) and "castle_owner" in castle:
+			if castle.castle_owner == owner:
+				count += 1
+	return count
+
+func count_nearby_allied_castles(position: Vector2) -> int:
+	"""Count how many allied castles are near a position (for coordination)"""
+	var count = 0
+	var castles = get_tree().get_nodes_in_group("Castles")
+	for castle in castles:
+		if not is_instance_valid(castle) or castle == self:
+			continue
+		if "castle_owner" not in castle or castle.castle_owner != "Enemy":
+			continue
+		
+		var distance = castle.global_position.distance_to(position)
+		if distance <= attack_range * 1.5:
+			count += 1
+	
+	return count
+
+func execute_strategic_attack(target: Node) -> void:
+	"""Execute attack with strategic force calculation"""
+	if not target or not is_instance_valid(target):
+		return
+	
+	var enemy_troops = target.get_troop_count()
+	var multiplier = 1.0
+	
+	# Adjust attack force based on strategy
+	match ai_strategy:
+		"aggressive":
+			# Send more troops, take more risks
+			multiplier = 1.3
+		"defensive":
+			# Only attack if overwhelming advantage
+			if calculate_attack_force(1.0) < enemy_troops * 1.5:
+				return  # Don't attack if not safe
+			multiplier = 0.8
+		"opportunistic":
+			# Send just enough to win
+			var needed = enemy_troops + 1
+			var available = troops - min_troops_to_attack
+			if needed <= available:
+				# Send exact amount needed
+				var attack_force = min(needed, available)
+				execute_attack(target, attack_force)
+				return
+			else:
+				return  # Can't win, don't attack
+		_:  # balanced
+			# Check if we have numerical advantage
+			var attack_force = calculate_attack_force(1.0)
+			if attack_force > enemy_troops:
+				multiplier = 1.1
+			elif attack_force > enemy_troops * 0.8:
+				multiplier = 1.2  # Send a bit more to secure win
+			else:
+				return  # Don't attack if too risky
+	
+	# Coordinate with nearby allies
+	var allied_support = count_nearby_allied_castles(target.global_position)
+	if allied_support > 0:
+		multiplier += 0.15 * allied_support  # More aggressive with support
+	
+	# Calculate and execute
+	var attack_force = calculate_attack_force(multiplier)
+	if attack_force > 0:
+		execute_attack(target, attack_force)
+
+func execute_attack(target: Node, attack_force: int) -> void:
+	"""Execute the actual attack with specified force"""
+	if not target or not is_instance_valid(target):
+		return
+	
+	attack_force = min(attack_force, troops - min_troops_to_attack)
+	
+	if attack_force <= 0:
+		return
+	
+	is_attacking = true
+	
+	# Remove troops immediately
+	troops -= attack_force
+	update_visuals()
+	
+	print("[STRATEGIC ATTACK] %s (%s strategy) sending %d troops to %s (Remaining: %d)" % 
+		[name, ai_strategy, attack_force, target.name, troops])
+	
+	# Update strategic memory
+	recent_targets.append(target)
+	if recent_targets.size() > 3:
+		recent_targets.pop_front()
+	last_attack_time = Time.get_ticks_msec() / 1000.0
+	
+	# Launch the attack
+	launch_attack(target, attack_force)
+
+# Legacy compatibility - keep old function names but redirect to new system
+func consider_attack() -> void:
+	consider_smart_attack()
 
 func get_nearby_player_castles() -> Array:
 	var result = []
@@ -481,26 +845,7 @@ func get_nearby_player_castles() -> Array:
 	return result
 
 func find_best_target() -> Node:
-	var castles = get_tree().get_nodes_in_group("Castles")
-	var best_target: Node = null
-	var best_score: float = -1.0
-	
-	for castle in castles:
-		if not is_instance_valid(castle):
-			continue
-		if castle == self or castle.castle_owner == "Enemy":
-			continue
-		
-		var distance = global_position.distance_to(castle.global_position)
-		if distance > attack_range:
-			continue
-		
-		var score = calculate_attack_score(castle, distance)
-		if score > best_score:
-			best_score = score
-			best_target = castle
-	
-	return best_target
+	return find_balanced_target()
 
 func calculate_attack_score(target: Node, distance: float) -> float:
 	if not target or not is_instance_valid(target):
@@ -532,24 +877,7 @@ func calculate_attack_score(target: Node, distance: float) -> float:
 	return score
 
 func execute_visual_attack(target: Node, multiplier: float = 1.0) -> void:
-	if not target or not is_instance_valid(target):
-		return
-	
-	var available_troops = troops - min_troops_to_attack
-	var attack_force = int(float(available_troops) * attack_percentage * multiplier)
-	attack_force = max(1, min(attack_force, available_troops))
-	
-	if attack_force > 0:
-		is_attacking = true
-		
-		# Remove troops immediately
-		troops -= attack_force
-		update_visuals()
-		
-		print("[ENEMY ATTACK] %s sending %d troops (Remaining: %d)" % [name, attack_force, troops])
-		
-		# Launch the attack
-		launch_attack(target, attack_force)
+	execute_strategic_attack(target)
 
 func show_attack_arrow(target: Node) -> void:
 	if not target or not is_instance_valid(target):
@@ -624,10 +952,16 @@ func set_troops(amount: int) -> void:
 	update_visuals()
 
 func set_ai_aggression(aggression_level: float) -> void:
+	ai_difficulty = aggression_level
 	if castle_owner == "Enemy":
-		attack_cooldown = 5.0 / max(0.1, aggression_level)
-		attack_percentage = clamp(0.4 * aggression_level, 0.2, 0.8)
-		min_troops_to_attack = max(2, int(8.0 / max(0.1, aggression_level)))
+		adjust_ai_difficulty()
+
+func set_ai_strategy_type(strategy: String) -> void:
+	"""Set the AI's strategic behavior
+	Options: 'aggressive', 'defensive', 'balanced', 'opportunistic'
+	"""
+	ai_strategy = strategy
+	print("[AI] %s now using %s strategy" % [name, strategy])
 
 func _exit_tree() -> void:
 	for tween in active_tweens:
